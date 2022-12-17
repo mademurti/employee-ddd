@@ -6,7 +6,7 @@
       </div>
       <div class="name">{{employee.name}}</div>
       <div v-if="employee.promoted">Promoted</div>
-      <div v-else class="promote-cta" @click="onPromoteClick(employee.id)">promote?</div>
+      <div v-else class="promote-cta" @click="onPromoteClick(employee)">promote?</div>
     </li>
   </ul>
 </template>
@@ -21,10 +21,10 @@ defineProps({
   },
 })
 const emit = defineEmits<{
-  (e: 'onPromoteClick', id: string): void
+  (e: 'onPromoteClick', employee: IEmployee): void
 }>()
 
-const onPromoteClick = (id: string) => {
-  emit('onPromoteClick', id)
+const onPromoteClick = (employee: IEmployee) => {
+  emit('onPromoteClick', employee)
 }
 </script>

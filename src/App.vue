@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import employeeRepository from './modules/employee/repository/employee-repository';
 import employeeList from './modules/employee/components/employee-list.vue';
+
+import employeeRepository from './modules/employee/api/employee-repository';
+import reviewRepository from './modules/review/api/review-repository';
+
 import type { IEmployee } from './modules/employee/types/employee';
+
+const MIN_RANKING_TO_PROMOTE = 7
 
 // init local state
 const isLoading = ref(true)
@@ -15,13 +20,22 @@ employeeRepository.getList().then(data => {
 })
 
 // method when promote an employee
-const onPromoteClick = (id: string) => {
+const onPromoteClick = async (employeeToPromote: IEmployee) => {
+  const reviews = await reviewRepository.getListReceivedReviews(employeeToPromote.id)
+  const averageRanking = reviews
+    .map(r => r.ranking)
+    .reduce((acc, ranking) => acc + ranking, 0) / reviews.length
+
+  if (averageRanking < MIN_RANKING_TO_PROMOTE) {
+    window.alert(`The ranking of ${employeeToPromote.name} is too low (${averageRanking}) to be promoted`)
+  }
+
   employees.value.find(employee => {
-    if (employee.id === id) {
+    if (employee.id === employeeToPromote.id) {
       employee.promoted = true
     }
   })
-  employeeRepository.promote(id)
+  employeeRepository.promote(employeeToPromote.id)
 }
 
 </script>

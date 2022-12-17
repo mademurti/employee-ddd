@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
 import type { IEmployee } from '../types/employee';
 
+// dummy data
 const createDummyData = () => {
   const size = faker.datatype.number({
     min: 3,
@@ -17,6 +18,7 @@ const createDummyData = () => {
   })
 }
 
+// api call to get the data
 const getList = ()  => {
   return new Promise((resolve) => {
     setTimeout(() => {
