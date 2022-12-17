@@ -1,23 +1,27 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import employeesRepository from './modules/employee/api/employees-repository';
+import employeeRepository from './modules/employee/repository/employee-repository';
 import employeeList from './modules/employee/components/employee-list.vue';
 import type { IEmployee } from './modules/employee/types/employee';
 
+// init local state
 const isLoading = ref(true)
 const employees = ref<IEmployee[]>([])
-employeesRepository.getList().then(data => {
+
+// get employee list from repository then assign to local state
+employeeRepository.getList().then(data => {
   Object.assign(employees.value, data)
   isLoading.value = false
 })
 
+// method when promote an employee
 const onPromoteClick = (id: string) => {
-  employees.value.forEach(employee => {
+  employees.value.find(employee => {
     if (employee.id === id) {
       employee.promoted = true
     }
   })
-  employeesRepository.promote(id)
+  employeeRepository.promote(id)
 }
 
 </script>
