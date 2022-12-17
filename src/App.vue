@@ -12,13 +12,11 @@ employeesRepository.getList().then(data => {
 })
 
 const onPromoteClick = (id: string) => {
-  const newEmployees = employees.value.map(employee => {
+  employees.value.forEach(employee => {
     if (employee.id === id) {
       employee.promoted = true
     }
-    return employee
   })
-  Object.assign(employees.value, newEmployees)
   employeesRepository.promote(id)
 }
 
