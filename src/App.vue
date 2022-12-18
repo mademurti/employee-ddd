@@ -8,6 +8,7 @@ import reviewRepository from './modules/review/api/review-repository';
 import type { IEmployee } from './modules/employee/types/employee.types';
 
 const MIN_RANKING_TO_PROMOTE = 7
+const MIN_NUMBER_OF_REVIEWS_TO_BE_PROMOTED = 4
 
 // init local state
 const isLoading = ref(true)
@@ -22,10 +23,18 @@ employeeRepository.getList().then(data => {
 // method when promote an employee
 const onPromoteClick = async (employeeToPromote: IEmployee) => {
   const reviews = await reviewRepository.getListReceivedReviews(employeeToPromote.id)
+
+  // business rule
+  if (reviews.length < MIN_NUMBER_OF_REVIEWS_TO_BE_PROMOTED) {
+    window.alert(`${employeeToPromote.name} received only ${reviews.length} peer reviews, they can't be promoted`)
+    return
+  }
+
   const averageRanking = reviews
     .map(r => r.ranking)
     .reduce((acc, ranking) => acc + ranking, 0) / reviews.length
 
+  // business rule
   if (averageRanking < MIN_RANKING_TO_PROMOTE) {
     window.alert(`The ranking of ${employeeToPromote.name} is too low (${averageRanking}) to be promoted`)
     return

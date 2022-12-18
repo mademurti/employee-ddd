@@ -1,5 +1,4 @@
 import { faker } from '@faker-js/faker';
-import type { IEmployee } from '../types/employee';
 
 // dummy data
 const createDummyData = () => {

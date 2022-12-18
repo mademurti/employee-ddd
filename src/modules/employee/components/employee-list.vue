@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import type { IEmployee } from '../types/employee.types.types';
+import type { IEmployee } from '../types/employee.types';
 
 defineProps({
   employees: {
