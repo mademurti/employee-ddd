@@ -28,6 +28,7 @@ const onPromoteClick = async (employeeToPromote: IEmployee) => {
 
   if (averageRanking < MIN_RANKING_TO_PROMOTE) {
     window.alert(`The ranking of ${employeeToPromote.name} is too low (${averageRanking}) to be promoted`)
+    return
   }
 
   employees.value.find(employee => {
