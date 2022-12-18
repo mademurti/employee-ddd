@@ -1,7 +1,8 @@
 import { faker } from '@faker-js/faker';
+import type { IReview } from '../types/review.types';
 
 // dummy data
-const createDummyData = (receiverId: string) => {
+const createDummyData = (receiverId: string): IReview[] => {
   const size = faker.datatype.number({
     min: 3,
     max: 10
@@ -23,7 +24,7 @@ const createDummyData = (receiverId: string) => {
 
 // api call to get the data
 const getListReceivedReviews = (employeeId: string) => {
-  return new Promise((resolve) => {
+  return new Promise<IReview[]>((resolve) => {
     setTimeout(() => {
       resolve(createDummyData(employeeId))
     }, 200)

@@ -5,7 +5,7 @@ import employeeList from './modules/employee/components/employee-list.vue';
 import employeeRepository from './modules/employee/api/employee-repository';
 import reviewRepository from './modules/review/api/review-repository';
 
-import type { IEmployee } from './modules/employee/types/employee';
+import type { IEmployee } from './modules/employee/types/employee.types';
 
 const MIN_RANKING_TO_PROMOTE = 7
 
